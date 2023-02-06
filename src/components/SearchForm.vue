@@ -7,7 +7,7 @@ export default {
 
 <template>
       <div class="container">
-            <div class="row">
+            <div class="row py-4">
                   <div class="col-2">
                         <select class="form-select" aria-label="Default select example">
                               <option selected>Search type...</option>

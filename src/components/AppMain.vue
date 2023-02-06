@@ -1,10 +1,18 @@
 <script>
 import SearchForm from './SearchForm.vue';
+import SingleCard from './SingleCard.vue';
 
 export default {
       name: 'AppMain',
       components: {
-            SearchForm
+            SearchForm,
+            SingleCard
+      },
+      props: {
+            cardList: {
+                  type: Array,
+                  default: []
+            }
       }
 }
 </script>
@@ -13,22 +21,16 @@ export default {
       <main>
             <SearchForm />
 
-            <div class="container">
+            <div class="container bg-white p-5">
                   <div class="row">
-                        <div class="col-6 col-sm-4 col-md-3 col-lg-2 text-center" v-for="i in 24">
-                              <div>
-                                    <img src="https://via.placeholder.com/200" class="img-fluid" alt="Card name">
-                              </div>
+                        <div class="col founded">
+                              <p class="p-3 text-white">Found {{ cardList.length }} cards</p>
+                        </div>
+                  </div>
 
-                              <div>
-                                    <h4>
-                                          Card name
-                                    </h4>
-
-                                    <h4>
-                                          Type of card
-                                    </h4>
-                              </div>
+                  <div class="row">
+                        <div class="col-6 col-sm-4 col-md-3 col-lg-2 text-center" v-for="card in cardList">
+                              <SingleCard :card="card" />
                         </div>
                   </div>
             </div>
@@ -38,5 +40,13 @@ export default {
 <style lang="scss">
 main {
       background-color: $ocra-color;
+
+      .founded p {
+            background-color: $found-color;
+      }
+
+      .info-card {
+            background-color: $ocra-color;
+      }
 }
 </style>
