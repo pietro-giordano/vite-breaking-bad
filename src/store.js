@@ -2,5 +2,6 @@ import { reactive } from 'vue';
 
 export const store = reactive({
       results: [],
-      archetype: []
+      archetype: [],
+      loading: false,
 });
