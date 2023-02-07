@@ -19,8 +19,25 @@ export default {
       },
       methods: {
 
-            getArchet() {
+            getArchetypeCards() {
 
+                  this.store.loading = true;
+                  this.store.cardVisibility = false;
+
+                  axios
+                        .get('https://db.ygoprodeck.com/api/v7/cardinfo.php', {
+                              params: {
+                                    archetype: this.store.archetypeValue
+                              }
+                        })
+                        .then((response) => {
+                              console.log(response);
+                              this.store.results = response.data.data;
+                              console.log(this.store.results);
+
+                              this.store.loading = false;
+                              this.store.cardVisibility = true;
+                        });
 
             }
 
@@ -32,11 +49,11 @@ export default {
             axios
                   .get('https://db.ygoprodeck.com/api/v7/cardinfo.php')
                   .then((response) => {
-                        console.log(response.data.data.slice(0, 24));
+                        console.log(response);
                         this.store.results = response.data.data.slice(0, 24);
                         console.log(this.store.results);
-                        this.store.loading = false;
 
+                        this.store.loading = false;
                   });
 
             axios
@@ -44,7 +61,6 @@ export default {
                   .then((response) => {
                         console.log(response.data);
                         this.store.archetype = response.data;
-
                   });
 
       }
@@ -53,7 +69,7 @@ export default {
 
 <template>
       <main>
-            <SearchForm />
+            <SearchForm @change="getArchetypeCards" />
 
             <div class="container bg-white p-5">
                   <div class="row">
@@ -66,7 +82,7 @@ export default {
 
                   <div class="row">
                         <div class="col-6 col-sm-4 col-md-3 col-lg-2 text-center" v-for="card in store.results">
-                              <SingleCard :card="card" />
+                              <SingleCard :card="card" v-if="store.cardVisibility" />
                         </div>
                   </div>
             </div>
